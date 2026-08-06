@@ -1,0 +1,13 @@
+﻿# Credenciales - NUNCA subir
+*.json
+alchemia-pipeline-key.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Archivos de datos descargados localmente (si los hay)
+*.csv
+*.parquet
