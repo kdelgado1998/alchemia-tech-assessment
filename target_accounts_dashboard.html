@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iowa Gin Expansion — Target Account Manifest</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --parchment:#F4F1E6;
+    --parchment-deep:#EAE4D3;
+    --juniper:#1F3B2C;
+    --juniper-deep:#132720;
+    --copper:#B36A3A;
+    --copper-bright:#C97D42;
+    --ink:#211F1A;
+    --muted:#6E6656;
+    --line:#D8D0BA;
+    --good:#3E7A4E;
+    --stale:#B04A3A;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px 80px;}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    background:
+      radial-gradient(circle at 85% -10%, rgba(179,106,58,0.16), transparent 55%),
+      linear-gradient(180deg, var(--juniper-deep), var(--juniper) 60%);
+    color:var(--parchment);
+    padding:64px 32px 56px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(115deg, rgba(244,241,230,0.035) 0px, rgba(244,241,230,0.035) 1px, transparent 1px, transparent 34px);
+    pointer-events:none;
+  }
+  .hero-inner{max-width:1180px;margin:0 auto;position:relative;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--copper-bright);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow .rule{width:36px;height:1px;background:var(--copper-bright);opacity:.7;}
+  h1.title{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(32px, 4.4vw, 54px);
+    line-height:1.05;
+    margin:0 0 18px;
+    max-width:820px;
+    letter-spacing:-0.01em;
+  }
+  h1.title em{font-style:italic;font-weight:400;color:var(--copper-bright);}
+  .hero-sub{
+    font-size:16px;
+    line-height:1.6;
+    color:#D9D6C4;
+    max-width:620px;
+    margin:0 0 40px;
+  }
+  .stat-row{display:flex; gap:1px; background:rgba(244,241,230,0.14); border-radius:10px; overflow:hidden; flex-wrap:wrap;}
+  .stat{
+    flex:1 1 150px;
+    background:rgba(19,39,32,0.55);
+    padding:20px 22px;
+  }
+  .stat .num{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:28px;
+    color:var(--parchment);
+    line-height:1.1;
+  }
+  .stat .label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:#B7B29B;
+    margin-top:6px;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin:56px 0 20px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:14px;
+  }
+  .section-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:24px;
+    margin:0;
+    color:var(--juniper);
+  }
+  .section-head .note{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+
+  /* ---------- INSIGHT CARDS ---------- */
+  .insights{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px;}
+  .insight{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:3px solid var(--copper);
+    border-radius:6px;
+    padding:20px 22px;
+  }
+  .insight .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--copper);
+    margin-bottom:8px;
+    display:block;
+  }
+  .insight p{margin:0; font-size:14px; line-height:1.55; color:var(--ink);}
+  .insight strong{color:var(--juniper);}
+
+  /* ---------- CHARTS ROW ---------- */
+  .charts-row{display:grid; grid-template-columns:1.3fr 1fr; gap:24px; margin-top:24px;}
+  .chart-card{background:#fff; border:1px solid var(--line); border-radius:6px; padding:22px 24px;}
+  .chart-card h3{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:.07em;
+    color:var(--muted);
+    margin:0 0 16px;
+  }
+  .bar-row{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .bar-label{width:150px; font-size:12.5px; color:var(--ink); flex-shrink:0;}
+  .bar-track{flex:1; background:var(--parchment-deep); border-radius:3px; height:16px; overflow:hidden;}
+  .bar-fill{height:100%; background:linear-gradient(90deg, var(--juniper), var(--copper)); border-radius:3px;}
+  .bar-value{width:56px; text-align:right; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); flex-shrink:0;}
+
+  .donut-wrap{display:flex; align-items:center; gap:24px;}
+  .donut{
+    width:130px; height:130px; border-radius:50%; flex-shrink:0;
+    background: conic-gradient(var(--juniper) 0% 60%, var(--copper) 60% 80%, #A9A28A 80% 100%);
+    position:relative;
+  }
+  .donut::after{
+    content:""; position:absolute; inset:18px; border-radius:50%; background:#fff;
+  }
+  .donut-legend{font-size:13px; line-height:2;}
+  .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:8px;}
+
+  /* ---------- CONTROLS ---------- */
+  .controls{
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    margin-top:18px; margin-bottom:4px;
+  }
+  .controls input[type="text"]{
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:13.5px;
+    padding:9px 14px;
+    border:1px solid var(--line);
+    border-radius:5px;
+    background:#fff;
+    width:220px;
+  }
+  .chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    padding:8px 14px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:#fff;
+    color:var(--muted);
+    cursor:pointer;
+    user-select:none;
+    transition:all .15s ease;
+  }
+  .chip.active{background:var(--juniper); color:var(--parchment); border-color:var(--juniper);}
+  .chip:hover{border-color:var(--copper);}
+
+  /* ---------- TABLE ---------- */
+  .table-wrap{
+    margin-top:16px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+    background:#fff;
+  }
+  table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  thead th{
+    text-align:left;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--parchment);
+    background:var(--juniper);
+    padding:12px 14px;
+    cursor:pointer;
+    white-space:nowrap;
+    position:sticky; top:0;
+  }
+  thead th:hover{background:var(--juniper-deep);}
+  thead th .arrow{opacity:.5; font-size:10px; margin-left:4px;}
+  tbody tr{border-bottom:1px solid var(--line);}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:#FBF9F2;}
+  tbody td{padding:11px 14px; vertical-align:middle;}
+  td.rank{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--copper); font-size:15px; width:36px;
+  }
+  td.retailer{font-weight:500; color:var(--ink);}
+  td.retailer .city{display:block; font-size:11.5px; color:var(--muted); font-weight:400; margin-top:2px;}
+  td.num{font-family:'IBM Plex Mono',monospace; text-align:right; color:var(--ink); white-space:nowrap;}
+  .badge{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    padding:3px 8px;
+    border-radius:3px;
+    display:inline-block;
+  }
+  .badge.chain{background:#EFE6D8; color:var(--copper);}
+  .badge.indep{background:#E4EBE3; color:var(--good);}
+  .recency{display:flex; align-items:center; gap:7px; font-family:'IBM Plex Mono',monospace; font-size:12px;}
+  .recency .dot{width:8px; height:8px; border-radius:50%;}
+  .recency.recent .dot{background:var(--good);}
+  .recency.stale .dot{background:var(--stale);}
+  .recency.stale{color:var(--stale); font-weight:600;}
+
+  footer{
+    margin-top:64px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    line-height:1.8;
+  }
+  footer a{color:var(--copper); text-decoration:none;}
+
+  @media (max-width:820px){
+    .insights{grid-template-columns:1fr;}
+    .charts-row{grid-template-columns:1fr;}
+    .stat-row{flex-direction:column;}
+    table{font-size:12px;}
+    td.retailer .city{display:none;}
+  }
+  :focus-visible{outline:2px solid var(--copper); outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="rule"></span>Thameswood Distillers — Iowa Expansion</div>
+    <h1 class="title">25 Iowa retailers already <em>proven</em> to buy gin.<br>None of them buy it from Thameswood — yet.</h1>
+    <p class="hero-sub">Ranked from public Iowa wholesale liquor sales data, cross-referenced against the current CRM to exclude existing accounts. Every retailer below has a real, measurable history of stocking gin.</p>
+    <div class="stat-row" id="statRow"></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="section-head">
+    <h2>What the list is telling us</h2>
+    <span class="note">3 findings from the ranked data</span>
+  </div>
+  <div class="insights">
+    <div class="insight">
+      <span class="tag">Chain concentration</span>
+      <p><strong>20 of 25</strong> accounts belong to three retail chains — HY-VEE, Sam's Club, and Costco. A handful of corporate-level conversations could unlock most of this list, rather than 25 separate pitches.</p>
+    </div>
+    <div class="insight">
+      <span class="tag">Geographic clustering</span>
+      <p>Accounts concentrate in <strong>four metro areas</strong>: Des Moines / West Des Moines, Iowa City / Coralville, Cedar Rapids, and the Quad Cities. A regional sales route would beat working the list top-to-bottom.</p>
+    </div>
+    <div class="insight">
+      <span class="tag">One recency outlier</span>
+      <p><strong>Lot-A-Spirits</strong> ranks #19 on historical value but hasn't sold gin since <strong>Oct 2022</strong> — 3.5 years stale versus every other account, most active as recently as this spring. Worth confirming it's still an operating account before outreach.</p>
+    </div>
+  </div>
+
+  <div class="section-head" style="margin-top:44px;">
+    <h2>Where the value sits</h2>
+    <span class="note">by county &amp; account type</span>
+  </div>
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3>Total gin sales by county</h3>
+      <div id="countyChart"></div>
+    </div>
+    <div class="chart-card">
+      <h3>Chain vs. independent</h3>
+      <div class="donut-wrap">
+        <div class="donut"></div>
+        <div class="donut-legend">
+          <div><span class="dot" style="background:var(--juniper)"></span>HY-VEE — 15 accounts</div>
+          <div><span class="dot" style="background:var(--copper)"></span>Sam's Club / Costco — 5</div>
+          <div><span class="dot" style="background:#A9A28A"></span>Independent — 5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head" style="margin-top:44px;">
+    <h2>The manifest</h2>
+    <span class="note">click a column to sort</span>
+  </div>
+  <div class="controls">
+    <input type="text" id="searchBox" placeholder="Search retailer or city…">
+    <div class="chip active" data-filter="all">All (25)</div>
+    <div class="chip" data-filter="chain">Chains</div>
+    <div class="chip" data-filter="indep">Independent</div>
+    <div class="chip" data-filter="stale">Needs recency check</div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th data-key="rank">#</th>
+          <th data-key="store_number">Store #</th>
+          <th data-key="store_name">Retailer</th>
+          <th data-key="county">County</th>
+          <th data-key="type">Type</th>
+          <th data-key="total_sale_dollars" style="text-align:right;">Total gin sales</th>
+          <th data-key="total_bottles" style="text-align:right;">Bottles</th>
+          <th data-key="last_purchase_date">Last purchase</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <div>Source: BigQuery <code>bigquery-public-data.iowa_liquor_sales.sales</code>, filtered to 6 confirmed gin categories, excluding accounts present in Thameswood's CRM (<code>raw.crm_accounts</code>).</div>
+    <div>Materialized as <code>alchemialabs-tech-assessment.analytics.target_accounts_iowa_gin</code>. Full methodology in <code>RANKING_REASONING.md</code>. Static export — data as of the assessment submission date.</div>
+  </footer>
+</div>
+
+<script>
+const data = [
+  {rank:1, store_number:"2633", store_name:"HY-VEE #3 / BDI", city:"Des Moines", county:"Polk", type:"chain", total_sale_dollars:4966849.79, total_bottles:289591, num_transactions:14213, last_purchase_date:"2026-04-30"},
+  {rank:2, store_number:"4829", store_name:"Central City 2", city:"Des Moines", county:"Polk", type:"indep", total_sale_dollars:4721806.14, total_bottles:259088, num_transactions:12574, last_purchase_date:"2026-04-30"},
+  {rank:3, store_number:"2512", store_name:"HY-VEE Wine and Spirits #1 (1281)", city:"Iowa City", county:"Johnson", type:"chain", total_sale_dollars:3029599.82, total_bottles:207947, num_transactions:10321, last_purchase_date:"2026-04-29"},
+  {rank:4, store_number:"3814", store_name:"Costco Wholesale #788", city:"West Des Moines", county:"Dallas", type:"chain", total_sale_dollars:2655171.12, total_bottles:93026, num_transactions:1131, last_purchase_date:"2026-04-28"},
+  {rank:5, store_number:"3420", store_name:"Sam's Club 6344", city:"Windsor Heights", county:"Polk", type:"chain", total_sale_dollars:1602485.79, total_bottles:81522, num_transactions:2822, last_purchase_date:"2026-04-29"},
+  {rank:6, store_number:"3385", store_name:"Sam's Club 8162", city:"Cedar Rapids", county:"Linn", type:"chain", total_sale_dollars:1579703.09, total_bottles:77992, num_transactions:3055, last_purchase_date:"2026-04-28"},
+  {rank:7, store_number:"3773", store_name:"Benz Distributing", city:"Cedar Rapids", county:"Linn", type:"indep", total_sale_dollars:1486909.66, total_bottles:77845, num_transactions:7785, last_purchase_date:"2026-04-29"},
+  {rank:8, store_number:"4677", store_name:"Costco Wholesale #1111", city:"Coralville", county:"Johnson", type:"chain", total_sale_dollars:1441578.64, total_bottles:50486, num_transactions:622, last_purchase_date:"2026-04-27"},
+  {rank:9, store_number:"2670", store_name:"HY-VEE Food Store", city:"Coralville", county:"Johnson", type:"chain", total_sale_dollars:1198591.30, total_bottles:68747, num_transactions:7189, last_purchase_date:"2026-04-29"},
+  {rank:10, store_number:"2663", store_name:"HY-VEE Food Store", city:"Urbandale", county:"Polk", type:"chain", total_sale_dollars:1144146.92, total_bottles:60040, num_transactions:4344, last_purchase_date:"2026-04-30"},
+  {rank:11, store_number:"2619", store_name:"HY-VEE Food & Drugstore #3", city:"West Des Moines", county:"Polk", type:"chain", total_sale_dollars:1137237.26, total_bottles:54907, num_transactions:5674, last_purchase_date:"2026-04-29"},
+  {rank:12, store_number:"2648", store_name:"HY-VEE #4", city:"West Des Moines", county:"Polk", type:"chain", total_sale_dollars:1044529.41, total_bottles:53790, num_transactions:7066, last_purchase_date:"2026-04-29"},
+  {rank:13, store_number:"3354", store_name:"Sam's Club 8238", city:"Davenport", county:"Scott", type:"chain", total_sale_dollars:1011953.32, total_bottles:56019, num_transactions:2514, last_purchase_date:"2026-04-28"},
+  {rank:14, store_number:"2501", store_name:"HY-VEE #2 (1018)", city:"Ames", county:"Story", type:"chain", total_sale_dollars:958731.51, total_bottles:58089, num_transactions:6298, last_purchase_date:"2026-04-29"},
+  {rank:15, store_number:"2614", store_name:"HY-VEE #3 Food & Drugstore", city:"Davenport", county:"Scott", type:"chain", total_sale_dollars:937627.34, total_bottles:58035, num_transactions:7662, last_purchase_date:"2026-04-29"},
+  {rank:16, store_number:"2190", store_name:"Central City Liquor, Inc.", city:"Des Moines", county:"Polk", type:"indep", total_sale_dollars:931657.40, total_bottles:92699, num_transactions:10310, last_purchase_date:"2026-04-30"},
+  {rank:17, store_number:"2603", store_name:"HY-VEE Wine and Spirits", city:"Bettendorf", county:"Scott", type:"chain", total_sale_dollars:903094.99, total_bottles:51965, num_transactions:7602, last_purchase_date:"2026-04-28"},
+  {rank:18, store_number:"3524", store_name:"Sam's Club 6568", city:"Ames", county:"Story", type:"chain", total_sale_dollars:890095.22, total_bottles:43582, num_transactions:1813, last_purchase_date:"2026-04-29"},
+  {rank:19, store_number:"3952", store_name:"Lot-A-Spirits", city:"Bettendorf", county:"Scott", type:"indep", total_sale_dollars:844459.06, total_bottles:49146, num_transactions:3967, last_purchase_date:"2022-10-10"},
+  {rank:20, store_number:"2665", store_name:"HY-VEE", city:"Waukee", county:"Dallas", type:"chain", total_sale_dollars:840255.24, total_bottles:42915, num_transactions:4449, last_purchase_date:"2026-04-30"},
+  {rank:21, store_number:"2622", store_name:"HY-VEE Food Store", city:"Iowa City", county:"Johnson", type:"chain", total_sale_dollars:826416.14, total_bottles:46292, num_transactions:5777, last_purchase_date:"2026-04-29"},
+  {rank:22, store_number:"2647", store_name:"HY-VEE #7", city:"Cedar Rapids", county:"Linn", type:"chain", total_sale_dollars:819916.41, total_bottles:43781, num_transactions:7981, last_purchase_date:"2026-04-29"},
+  {rank:23, store_number:"3494", store_name:"Sam's Club 6514", city:"Waterloo", county:"Black Hawk", type:"chain", total_sale_dollars:787316.32, total_bottles:39778, num_transactions:2001, last_purchase_date:"2026-04-09"},
+  {rank:24, store_number:"2502", store_name:"HY-VEE Wine and Spirits (1022)", city:"Ankeny", county:"Polk", type:"chain", total_sale_dollars:778998.99, total_bottles:46801, num_transactions:5861, last_purchase_date:"2026-04-29"},
+  {rank:25, store_number:"6242", store_name:"Wall to Wall Wine and Spirits", city:"West Des Moines", county:"Dallas", type:"indep", total_sale_dollars:756237.93, total_bottles:28880, num_transactions:1868, last_purchase_date:"2026-01-26"},
+];
+
+const RECENT_CUTOFF = new Date("2025-06-01");
+
+function fmtMoney(n){
+  return "$" + n.toLocaleString("en-US", {maximumFractionDigits:0});
+}
+function fmtNum(n){
+  return n.toLocaleString("en-US");
+}
+function isStale(dateStr){
+  return new Date(dateStr) < RECENT_CUTOFF;
+}
+
+// ---- Stats row ----
+function renderStats(){
+  const totalValue = data.reduce((s,d)=>s+d.total_sale_dollars,0);
+  const totalBottles = data.reduce((s,d)=>s+d.total_bottles,0);
+  const staleCount = data.filter(d=>isStale(d.last_purchase_date)).length;
+  const chainCount = data.filter(d=>d.type==="chain").length;
+  const stats = [
+    {num: fmtMoney(totalValue), label:"Combined historical gin value"},
+    {num: fmtNum(totalBottles), label:"Bottles of gin sold"},
+    {num: chainCount + " / 25", label:"Chain-affiliated accounts"},
+    {num: (25-staleCount) + " / 25", label:"Active within last 12 months"},
+  ];
+  document.getElementById("statRow").innerHTML = stats.map(s=>
+    `<div class="stat"><div class="num">${s.num}</div><div class="label">${s.label}</div></div>`
+  ).join("");
+}
+
+// ---- County bar chart ----
+function renderCountyChart(){
+  const byCounty = {};
+  data.forEach(d=>{ byCounty[d.county] = (byCounty[d.county]||0) + d.total_sale_dollars; });
+  const entries = Object.entries(byCounty).sort((a,b)=>b[1]-a[1]);
+  const max = entries[0][1];
+  document.getElementById("countyChart").innerHTML = entries.map(([county,val])=>`
+    <div class="bar-row">
+      <div class="bar-label">${county}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(val/max*100).toFixed(1)}%"></div></div>
+      <div class="bar-value">${fmtMoney(val).replace("$","$")}</div>
+    </div>`).join("");
+}
+
+// ---- Table ----
+let currentFilter = "all";
+let currentSearch = "";
+let sortKey = "rank";
+let sortDir = 1;
+
+function applyData(){
+  let rows = data.slice();
+  if(currentFilter === "chain") rows = rows.filter(d=>d.type==="chain");
+  if(currentFilter === "indep") rows = rows.filter(d=>d.type==="indep");
+  if(currentFilter === "stale") rows = rows.filter(d=>isStale(d.last_purchase_date));
+  if(currentSearch){
+    const q = currentSearch.toLowerCase();
+    rows = rows.filter(d => d.store_name.toLowerCase().includes(q) || d.city.toLowerCase().includes(q));
+  }
+  rows.sort((a,b)=>{
+    let av=a[sortKey], bv=b[sortKey];
+    if(typeof av === "string"){ av=av.toLowerCase(); bv=bv.toLowerCase(); }
+    if(av<bv) return -1*sortDir;
+    if(av>bv) return 1*sortDir;
+    return 0;
+  });
+  return rows;
+}
+
+function renderTable(){
+  const rows = applyData();
+  document.getElementById("tableBody").innerHTML = rows.map(d=>{
+    const stale = isStale(d.last_purchase_date);
+    return `<tr>
+      <td class="rank">${d.rank}</td>
+      <td class="num" style="text-align:left;">${d.store_number}</td>
+      <td class="retailer">${d.store_name}<span class="city">${d.city}</span></td>
+      <td>${d.county}</td>
+      <td><span class="badge ${d.type==='chain'?'chain':'indep'}">${d.type==='chain'?'Chain':'Independent'}</span></td>
+      <td class="num">${fmtMoney(d.total_sale_dollars)}</td>
+      <td class="num">${fmtNum(d.total_bottles)}</td>
+      <td><span class="recency ${stale?'stale':'recent'}"><span class="dot"></span>${d.last_purchase_date}${stale?' — check status':''}</span></td>
+    </tr>`;
+  }).join("");
+}
+
+document.querySelectorAll("thead th").forEach(th=>{
+  th.addEventListener("click", ()=>{
+    const key = th.dataset.key;
+    if(sortKey === key){ sortDir *= -1; } else { sortKey = key; sortDir = 1; }
+    renderTable();
+  });
+});
+
+document.querySelectorAll(".chip").forEach(chip=>{
+  chip.addEventListener("click", ()=>{
+    document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+    chip.classList.add("active");
+    currentFilter = chip.dataset.filter;
+    renderTable();
+  });
+});
+
+document.getElementById("searchBox").addEventListener("input", (e)=>{
+  currentSearch = e.target.value;
+  renderTable();
+});
+
+renderStats();
+renderCountyChart();
+renderTable();
+</script>
+</body>
+</html>
